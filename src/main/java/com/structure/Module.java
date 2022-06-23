@@ -10,8 +10,6 @@ public class Module extends Unit implements Serializable {
 	
 	private int projectID;
 
-	
-
 	public Module(LocalDate deadline,LocalDate start, String description, StatusC.stat s, int id, String name, Project proj) throws Exception {
 		super(deadline, start,  proj.getManager(), description, s, id, name);
 		// TODO Auto-generated constructor stub
