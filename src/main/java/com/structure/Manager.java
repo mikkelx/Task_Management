@@ -6,7 +6,7 @@ import java.time.LocalDate;
 public class Manager extends Employee implements Serializable {
 
     //TODO - zmiana wyjatku
-    public void extendProjectTime(Project project, LocalDate newProjectDeadline) //throws Wyjatek zrobiony przez Kube
+    public void extendProjectTime(Project project, LocalDate newProjectDeadline) 
     {
         LocalDate oldProjectDeadline = project.getDeadline();
         //nowa data jest przed stara lub jest jej rowna
