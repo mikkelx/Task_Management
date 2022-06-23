@@ -1,4 +1,10 @@
-# Task management project
+# Task Management App
 
-This is my example project on  task management using Java and JavaFX. 
-Projects and tasks data is downloaded from localhost database into static container. Data is live-updated in database. 
+## General Info
+App created in Java to help organise work between workers. You can assign tasks to you workers and oversee your projects progress. 
+
+
+## Technologies
+  - Java  
+  - JavaFX
+  - SQL
