@@ -1,0 +1,242 @@
+-- phpMyAdmin SQL Dump
+-- version 5.1.3
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Czas generowania: 12 Cze 2022, 17:17
+-- Wersja serwera: 10.4.24-MariaDB
+-- Wersja PHP: 8.1.5
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+--
+-- Baza danych: `accountbase`
+--
+
+DELIMITER $$
+--
+-- Procedury
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `addLog` (IN `file` VARCHAR(45))   BEGIN
+IF ((SELECT * FROM logs WHERE logs.fileName = file) IS NULL) THEN
+INSERT INTO logs (fileName) VALUES (file); 
+END IF;
+END$$
+
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `accounts`
+--
+
+CREATE TABLE `accounts` (
+  `employeeID` int(11) NOT NULL,
+  `firstName` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `lastName` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `position` enum('manager','tester','programmer','other') CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `userName` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `password` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Zrzut danych tabeli `accounts`
+--
+
+INSERT INTO `accounts` (`employeeID`, `firstName`, `lastName`, `position`, `userName`, `password`) VALUES
+(1, 'Tyler', 'Durden', 'manager', 'fight', 'club'),
+(2, 'Marcin', 'Najman', 'tester', 'mma', 'mandarynki'),
+(3, 'Frank', 'Herbert', 'programmer', 'diuna', 'diuna'),
+(4, 'Robert', 'Maklowicz', 'other', 'kulinarny', 'podroznik'),
+(5, 'Bruce', 'Wayne', 'manager', 'im', 'batman'),
+(7, 'Jared', 'Leto', 'programmer', 'morbius', 'morbilion'),
+(8, 'Robert', 'Lewandowski', 'tester', 'pilka', 'nozna'),
+(9, 'Mariusz', 'Pudzianowski', 'other', 'polska', 'gurom');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `employee_task`
+--
+
+CREATE TABLE `employee_task` (
+  `employeeID` int(11) NOT NULL,
+  `taskID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `logs`
+--
+
+CREATE TABLE `logs` (
+  `fileName` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `module`
+--
+
+CREATE TABLE `module` (
+  `moduleID` int(11) NOT NULL,
+  `projectID` int(11) NOT NULL,
+  `deadline` date NOT NULL,
+  `startdate` date NOT NULL,
+  `description` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `status` varchar(60) COLLATE utf8mb4_bin NOT NULL,
+  `nazwa` varchar(100) COLLATE utf8mb4_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+--
+-- Zrzut danych tabeli `module`
+--
+
+INSERT INTO `module` (`moduleID`, `projectID`, `deadline`, `startdate`, `description`, `status`, `nazwa`) VALUES
+(1, 2, '2020-01-01', '2019-01-01', 'Opis 1 M', 'nowy', 'Nazwa 1 M'),
+(2, 2, '2020-01-01', '2019-01-01', 'Opis 2 M', 'nowy', 'Nazwa 2 M');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `project`
+--
+
+CREATE TABLE `project` (
+  `projectID` int(11) NOT NULL,
+  `deadline` date NOT NULL,
+  `startdate` date NOT NULL,
+  `description` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `status` varchar(60) COLLATE utf8mb4_bin NOT NULL,
+  `nazwa` varchar(100) COLLATE utf8mb4_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+--
+-- Zrzut danych tabeli `project`
+--
+
+INSERT INTO `project` (`projectID`, `deadline`, `startdate`, `description`, `status`, `nazwa`) VALUES
+(1, '2020-01-01', '2019-01-01', 'Opis 1', 'nowy', 'Nazwa 1'),
+(2, '2020-01-01', '2019-01-01', 'Opis 5', 'nowy', 'Nazwa 5'),
+(3, '2020-01-01', '2019-01-01', 'Opis 6', 'nowy', 'Nazwa 6'),
+(4, '2020-01-01', '2019-01-01', 'Opis 2', 'nowy', 'Nazwa 2');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `task`
+--
+
+CREATE TABLE `task` (
+  `taskID` int(11) NOT NULL,
+  `moduleID` int(11) NOT NULL,
+  `deadline` date NOT NULL,
+  `startdate` date NOT NULL,
+  `description` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `status` varchar(60) COLLATE utf8mb4_bin NOT NULL,
+  `nazwa` varchar(100) COLLATE utf8mb4_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+--
+-- Zrzut danych tabeli `task`
+--
+
+INSERT INTO `task` (`taskID`, `moduleID`, `deadline`, `startdate`, `description`, `status`, `nazwa`) VALUES
+(1, 1, '2020-01-01', '2019-01-01', 'Opis 1 T', 'nowy', 'Nazwa 1 T'),
+(2, 1, '2020-01-01', '2019-01-01', 'Opis 2 T', 'nowy', 'Nazwa 2 T'),
+(3, 1, '2021-01-01', '2019-01-01', 'Opis 3 T', 'nowy', 'Nazwa 3 T'),
+(4, 1, '2020-01-01', '2019-01-01', 'Opis 4 T', 'nowy', 'Nazwa 4 T');
+
+--
+-- Indeksy dla zrzutów tabel
+--
+
+--
+-- Indeksy dla tabeli `accounts`
+--
+ALTER TABLE `accounts`
+  ADD PRIMARY KEY (`employeeID`);
+
+--
+-- Indeksy dla tabeli `employee_task`
+--
+ALTER TABLE `employee_task`
+  ADD PRIMARY KEY (`employeeID`,`taskID`),
+  ADD KEY `taskID` (`taskID`);
+
+--
+-- Indeksy dla tabeli `logs`
+--
+ALTER TABLE `logs`
+  ADD PRIMARY KEY (`fileName`);
+
+--
+-- Indeksy dla tabeli `module`
+--
+ALTER TABLE `module`
+  ADD PRIMARY KEY (`moduleID`),
+  ADD KEY `projectID` (`projectID`);
+
+--
+-- Indeksy dla tabeli `project`
+--
+ALTER TABLE `project`
+  ADD PRIMARY KEY (`projectID`);
+
+--
+-- Indeksy dla tabeli `task`
+--
+ALTER TABLE `task`
+  ADD PRIMARY KEY (`taskID`),
+  ADD KEY `moduleID` (`moduleID`);
+
+--
+-- AUTO_INCREMENT dla zrzuconych tabel
+--
+
+--
+-- AUTO_INCREMENT dla tabeli `accounts`
+--
+ALTER TABLE `accounts`
+  MODIFY `employeeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT dla tabeli `project`
+--
+ALTER TABLE `project`
+  MODIFY `projectID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT dla tabeli `task`
+--
+ALTER TABLE `task`
+  MODIFY `taskID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Ograniczenia dla zrzutów tabel
+--
+
+--
+-- Ograniczenia dla tabeli `employee_task`
+--
+ALTER TABLE `employee_task`
+  ADD CONSTRAINT `employee_task_ibfk_1` FOREIGN KEY (`employeeID`) REFERENCES `accounts` (`employeeID`),
+  ADD CONSTRAINT `employee_task_ibfk_2` FOREIGN KEY (`taskID`) REFERENCES `task` (`taskID`);
+
+--
+-- Ograniczenia dla tabeli `module`
+--
+ALTER TABLE `module`
+  ADD CONSTRAINT `module_ibfk_1` FOREIGN KEY (`projectID`) REFERENCES `project` (`projectID`);
+
+--
+-- Ograniczenia dla tabeli `task`
+--
+ALTER TABLE `task`
+  ADD CONSTRAINT `task_ibfk_1` FOREIGN KEY (`moduleID`) REFERENCES `module` (`moduleID`);
+COMMIT;
