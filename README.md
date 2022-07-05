@@ -9,5 +9,5 @@ App created in Java to help organise work between workers. You can assign tasks 
   - JavaFX
   - SQL
 
-![alt text](https://github.com/mikkelx/task_management/blob/master/2.png?raw=true)
-![alt text](https://github.com/mikkelx/task_management/blob/master/3.png?raw=true)
+![alt text](https://github.com/mikkelx/task_management/blob/master/2.PNG?raw=true)
+![alt text](https://github.com/mikkelx/task_management/blob/master/2.PNG?raw=true)
